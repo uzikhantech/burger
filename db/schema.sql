@@ -1,12 +1,13 @@
-DROP DATABASE IF EXISTS sandbox_db;
-CREATE DATABASE sandbox_db;
+DROP SCHEMA IF EXISTS burger_db;
+CREATE SCHEMA burger_db;
 
-USE sandbox_db;
+SET search_path TO burger_db;
 
-CREATE TABLE users (
-    id INTEGER AUTO_INCREMENT NOT NULL,
-    username VARCHAR(255),
-    password VARCHAR(255),
-    PRIMARY KEY(id)  
+
+CREATE TABLE burgers (
+    id  SERIAL PRIMARY KEY
+    burger_name VARCHAR(255),
+    devoured BOOLEAN NOT NULL
 )
+
 

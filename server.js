@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express();
+const connection = require('./config/connection');
 
 // We will be using the npm package "dotenv" to allow us to use our database credentials but prevent them from beeing pushed to github.  
 // there are steps to configure dotenv:
@@ -10,9 +11,9 @@ const app = express();
 // 5. replace the credentials that you would like masked with "process.env.<variable name here>"
 // see the db/dbConnection.js file for an example of how the variables will be implemented.
 // if you have cloned this repo, you will NOT see the .env file, as that is the whole point! You will need to create it per the instructions above
-require('dotenv').config()
 
-const PORT = process.env.PORT || 8080;
+
+const PORT = 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
