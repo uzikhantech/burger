@@ -1,0 +1,76 @@
+<div class = "container">
+
+    {{!-- this is the jumbotron--}}
+    <div class="jumbotron  text-center">
+        <h1 class="display-4">Eat Da Burger</h1>
+        <p class="lead">Simply add a burger and eat it</p>
+    </div>
+
+    <hr>
+    
+    
+
+    {{!-- this is the burger image--}}
+    <div class="row justify-content-center">
+        <div class="col-2">
+          <img src="/assets/img/burger.png" alt="Delicius burger" width="200" height="200">
+          <h5> Eat-Da-Burger!</h5>
+        </div>
+    </div>
+
+    {{!-- couple of line breaks--}}
+    <br>
+   
+
+    {{!-- list of current burgers (burger contolller passed hbsObject to here)--}}
+
+    <div class = "row justify-content-right">
+        <div class ="col-6 border-right text-right">
+          <ul style="list-style-type:none;">
+                {{#each this.burgers}}
+                     {{#unless devoured}}
+                        <li>{{burger_name}}
+                          <button class="eatBurger btn btn-danger btn-sm" data-id="{{this.id}}" data-eat="true">Devour It!</button>
+                         </li><br>
+                       {{/unless}}
+               
+                {{/each}}
+            </ul>
+         </div>
+
+
+         <div class ="col-6">
+          <ul style="list-style-type:none;">
+                {{#each this.burgers}}
+                     {{#if devoured}}
+                        <li class = "text-secondary">{{burger_name}}  
+                            <button class="btn btn-link btn-sm" role="button">(delete)</a>
+                        </li><br>
+                       {{/if}}
+               
+                {{/each}}
+            </ul>
+         </div>
+    </div>
+    
+
+
+
+
+    <br>
+
+    {{!-- this is the form to submit burger--}}
+    <div class ="row">
+        <div class="col-12 text-center">
+         <h2>Add a Burger</h2>
+        <form class="create-form addBurger">
+            <div class="form-group">
+                <input type="text" class="input-lg col-6 pt-4 pr-4" id="newBurger" name="burger_name">
+            </div>
+            <button class="btn btn-success btn-sm ml-4 addBurger" type="submit">Add Burger</button>
+        </form>
+        </div>
+    </div>
+  
+</div>
+

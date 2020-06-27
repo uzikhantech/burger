@@ -1,86 +1,68 @@
 var connection = require("./connection.js");
 
-//The above helper function loops through and creates an array of question marks - ["?", "?", "?"] - and turns it into a string.
-// ["?", "?", "?"].toString() => "?,?,?";
-printQuestionMarks = (num) => {
-    var arr = [];
-  
-    for (var i = 0; i < num; i++) {
-      arr.push("?");
-    }
-  
-    return arr.toString();
-  }
 
-  // Helper function to convert object key/value pairs to SQL syntax
- objToSql= (ob) => {
-    var arr = [];
-  
-    // loop through the keys and push the key/value as a string int arr
-    for (var key in ob) {
-      var value = ob[key];
-      // check to skip hidden properties
-      if (Object.hasOwnProperty.call(ob, key)) {
-        // if string with spaces, add quotations (Lana Del Grey => 'Lana Del Grey')
-        if (typeof value === "string" && value.indexOf(" ") >= 0) {
-          value = "'" + value + "'";
-        }
-        // e.g. {name: 'Lana Del Grey'} => ["name='Lana Del Grey'"]
-        // e.g. {sleepy: true} => ["sleepy=true"]
-        arr.push(key + "=" + value);
-      }
-    }
-}
-  
+// //unused DBQuery fuctuon usning promises
+// function dbQuery(sql, inputs) {
+//   return new Promise((resolve, reject) => {
+//     const query = connection.query(sql, inputs, (err, res) => {
+//       if (err) reject(err, res);
+//       resolve(res);
+//     });
+
+//     console.log(query.sql);
+//   });
+// }
 
 //ORM for selectALL
-let selectAll = {
-    selectAll: (whatToSelect, tableInput) => {
-        var queryString = "SELECT ?? FROM ??";
-        connection.query(queryString, [whatToSelect, tableInput], (err, result) => {
-            if (err) {
-                 throw err;
-            }
-            console.log(result);
-         });
-    }
+// let selectAll = {
+//     selectAll: function(table) {
+//         var queryString = `SELECT * FROM ${table}`;
+//         return connection.query(queryString);
+//     }
+// }
+
+const selectAll = (table) => {
+        var queryString = `SELECT * FROM ${table}`;
+        return connection.query(queryString);
 }
 
+
 //ORM for selectOne
-let selectOne = {
-    selectOne:(table, cols, vals, callback) => {
-        var queryString = `INSERT INTO ${table} (${cols.toString()}) VALUES (${printQuestionMarks(vals.length)});`;
-        console.log(queryString);
-        connection.query(queryString, vals, (err, result) =>{
-          if (err) {
-            throw err;
-          }
+const insertOne = (table, column, value) => {
+    console.log(`(${value})`)
+        var queryString = `INSERT INTO ${table} (${column.toString()}) VALUES ($1,$2)`;
+        console.log(queryString)
     
-          callback(result);
-        });
-    }
+        return connection.query(queryString, [value.toString(),'n']);
+}
+
+
+//ORM for UpdateOne
+const updateOne = (table, column, columnVal, id) =>{
+    console.log(id);
+    console.log(columnVal);
+    var queryString = `UPDATE  ${table} SET ${column} = $1 WHERE id = $2`;
+    console.log(queryString);
+       
+    return connection.query(queryString, [columnVal, id]);
 }
 
 //ORM for UpdateOne
-let updateOne = {
-    updateOne: (table, objColVals, condition, callback) =>{
-        var queryString = `UPDATE " + ${table} SET ${objToSql(objColVals)} WHERE ${contdition}`;
-        console.log(queryString);
-        connection.query(queryString, (err, result) => {
-          if (err) {
-            throw err;
-          }
-    
-          callback(result);
-        });
-    }
+const deleteOne = (table, id) =>{
+    console.log(id);
+    var queryString = `DELETE FROM  ${table} WHERE id = $1`;
+    console.log(queryString);
+       
+    return connection.query(queryString, [id]);
 }
 
-// Object Relational Mapper (ORM)
+// // Object Relational Mapper (ORM)
 var orm = {
      selectAll,
-     selectOne,
-     updateOne
+     insertOne,
+     updateOne,
+     deleteOne
   };
+
 
 module.exports = orm;

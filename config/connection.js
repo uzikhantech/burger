@@ -1,4 +1,5 @@
 const pg = require('pg');
+const util = require('util');
 
 //database connection properties
 const connection  = new pg.Client({
@@ -17,4 +18,6 @@ connection.connect((err) => {
      console.log("Connection Succesful...");
 });
  
+connection.query = util.promisify(connection.query);
+
 module.exports = connection;

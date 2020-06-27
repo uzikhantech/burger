@@ -13,7 +13,8 @@ app.use(express.json());
 var exphbs = require("express-handlebars");
 
 
-//const connection = require('./config/connection');
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 
 const PORT = 3000;
