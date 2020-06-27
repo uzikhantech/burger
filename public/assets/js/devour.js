@@ -50,5 +50,21 @@ $( document ).ready( ()=> {
           });
     
     });
+
+    //CLICK THE DELETE BUTTON//
+    $(".deleteBurger").on("click", (event) => {
+        let id = event.target.dataset.id;
+    
+        // Send the DELETE request.
+        $.ajax("/api/burgers/delete" + id, {
+          type: "DELETE"
+        }).then(
+          () => {
+            console.log("deleted Burger", id);
+            // Reload the page to get the updated list
+            location.reload();
+          }
+        );
+      });
     
 });

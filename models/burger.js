@@ -18,7 +18,7 @@ const updateOne = (columnVal, id) => {
 };
 
 const deleteOne = (id) => {
-    return orm.deleteOne('burger',id);
+    return orm.deleteOne('burgers',id);
 
 }
 

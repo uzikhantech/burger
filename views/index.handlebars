@@ -44,7 +44,7 @@
                 {{#each this.burgers}}
                      {{#if devoured}}
                         <li class = "text-secondary">{{burger_name}}  
-                            <button class="btn btn-link btn-sm" role="button">(delete)</a>
+                            <button class="btn btn-link btn-sm deleteBurger" data-id="{{this.id}}" role="button">(delete)</a>
                         </li><br>
                        {{/if}}
                
